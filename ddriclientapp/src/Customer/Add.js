@@ -31,10 +31,8 @@ const Add = () => {
       if (json.data.Status === "Success") {
         console.log(json.data.Status);
         alert("Data Save Successfully");
-        this.props.history.push("/CustomerList");
       } else {
         alert("Data not Saved");
-        this.props.history.push("/CustomerList");
       }
     });
     navigate("/CustomerList");

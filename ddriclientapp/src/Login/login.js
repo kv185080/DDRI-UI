@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from 'react'   
+import React, { useState, useEffect, useContext } from 'react'   
 import loginImage from '../../src/Login-background-img.png';
-import axios from 'axios';  
-function Login(props) {  
-    const [employee, setemployee] = useState({ Email: '', Password: ''});  
-    const apiUrl = "http://localhost:2016/api/Customer/Login";    
-    const btnLogin = (e) => {    
+import { useNavigate } from "react-router-dom";
+import { NavigationContext } from '../NavigationContext';
+
+
+function Login(props) { 
+    let navigate = useNavigate(); 
+    const [employee, setemployee] = useState({ Email: '', Password: ''});    
+    const {Login}= useContext(NavigationContext) ;
+    const btnLogin = (e) => {   
             e.preventDefault();    
-            debugger;   
-            const data = { Email:employee.Email, Password: employee.Password };    
-            axios.post(apiUrl, data)    
-            .then((result) => {    
-                debugger;  
-                console.log(result.data);   
-                const serializedState = JSON.stringify(result.data.UserDetails);  
-               var a= localStorage.setItem('myData', serializedState);   
-                console.log("A:",a)  
-                const user =result.data.UserDetails;  
-                console.log(result.data.message);  
-                if (result.data.status == '200')    
-                    props.history.push('/Dashboard')    
-                else    
-                alert('Invalid User');    
-            })        
+            debugger;
+            Login(employee.Email,employee.Password)  
+            const data = { Email:employee.Email, Password: employee.Password };          
           };    
           
           const onChange = (e) => {    
@@ -41,7 +32,7 @@ function Login(props) {
                   <div class="col-lg-6">  
                     <div class="p-5">  
                       <div class="text-center">  
-                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>  
+                        <h1 class="h4 text-gray-900 mb-4">Please Login</h1>  
                       </div>  
                       <form onSubmit={btnLogin} class="user">  
                         <div class="form-group">  
