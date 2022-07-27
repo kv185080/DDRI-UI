@@ -7,7 +7,7 @@ class Table extends Component {
     }  
       
     Delete= () =>{  
-     axios.delete('http://localhost/DDRIAPI/api/Customer/Delete?id='+this.props.obj.Id)  
+     axios.delete('http://localhost:2016/api/Customer/Delete?id='+this.props.obj.Id)  
     .then(json => {  
     if(json.data.Status==='Delete'){  
     alert('Record deleted successfully!!');  

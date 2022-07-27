@@ -15,7 +15,7 @@ this.state = {
 }  
 }   
 AddCustomer=()=>{  
-  axios.post('http://localhost/DDRIAPI/Api/Customer/addorUpdate/', {FirstName:this.state.FirstName,LastName:this.state.LastName,State:this.state.State,City:this.state.City,  
+  axios.post('http://localhost:2016/api/Customer/addorUpdate/', {FirstName:this.state.FirstName,LastName:this.state.LastName,State:this.state.State,City:this.state.City,  
   RewardPoints:this.state.RewardPoints})  
 .then(json => {  
 if(json.data.Status==='Success'){  

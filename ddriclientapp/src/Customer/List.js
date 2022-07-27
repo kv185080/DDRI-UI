@@ -11,7 +11,7 @@ export default class list extends Component {
     }  
     componentDidMount(){  
 
-      axios.get('http://localhost/DDRIAPI/api/Customer/details')  
+      axios.get('http://localhost:2016/api/Customer/details')  
         .then(response => {  
           this.setState({ business: response.data });  
   
