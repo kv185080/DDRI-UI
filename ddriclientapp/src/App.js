@@ -21,8 +21,8 @@ function App() {
           </div>  
         </nav> <br />  
         <Routes>  
-          <Route exact path='/Add' component={AddCustomer} />  
-          <Route path='/Edit/:id' component={EditCustomer} />  
+          <Route exact path='/AddCustomer' element={<AddCustomer></AddCustomer>} />  
+          <Route path='/Edit/:id' element={<EditCustomer></EditCustomer>} />  
           <Route path='/CustomerList' element={<Customerlist></Customerlist>} />  
         </Routes>  
       </div>  
