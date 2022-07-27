@@ -7,8 +7,12 @@ const Login = () => {
   let navigate = useNavigate();
 
   const [employee, setemployee] = useState({ Email: "", Password: "" });
-  const { Login, user, isLoggedIn } = useContext(NavigationContext);
+  const { Login, user, isLoggedIn, setIsLoggedIn } =
+    useContext(NavigationContext);
 
+  useEffect(() => {
+    setIsLoggedIn(false);
+  });
   const btnLogin = (e) => {
     e.preventDefault();
     let isSuccess = Login(employee.Email, employee.Password);

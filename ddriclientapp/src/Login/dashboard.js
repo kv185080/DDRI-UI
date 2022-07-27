@@ -2,8 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { NavigationContext } from "../Context/NavigationContext";
 
 const Dashboard = () => {
-  const { user } = useContext(NavigationContext);
+  const { user, setIsLoggedIn } = useContext(NavigationContext);
 
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, [user]);
   return (
     <>
       <div class="col-sm-12 btn btn-primary">Dashboard</div>
