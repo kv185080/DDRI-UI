@@ -3,6 +3,7 @@ import Customerlist from "../Customer/List";
 import EditCustomer from "../Customer/Edit";
 import LoginPage from "../Login/login";
 import Regster from "../Login/register";
+import ProductList from '../Product/ListProduct' ;
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "../App.css";
 import Dashboard from "../Login/dashboard";
@@ -54,6 +55,7 @@ const Layout = (props) => {
           <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
           <Route path="/Edit/:id" element={<EditCustomer></EditCustomer>} />
           <Route path="/CustomerList" element={<Customerlist></Customerlist>} />
+          <Route path='/ProductList' element={<ProductList></ProductList>} />
         </Routes>
       </div>
     </>
