@@ -1,94 +1,145 @@
-import React from 'react';  
-import axios from 'axios';  
-import '../Customer/AddStyle.css';  
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import "../Customer/AddStyle.css";
+import { useNavigate } from "react-router-dom";
 
-import { Container, Col, Form, Row, FormGroup, Label, Input, Button } from 'reactstrap';  
-class Add extends React.Component{  
-constructor(props){  
-super(props)  
-this.state = {  
-  FirstName:'',  
-  LastName:'',  
-  State:'',  
-  City:'' ,
-  RewardPoints:'' 
-}  
-}   
-AddCustomer=()=>{  
-  axios.post('http://localhost/DDRIAPI/Api/Customer/addorUpdate/', {FirstName:this.state.FirstName,LastName:this.state.LastName,State:this.state.State,City:this.state.City,  
-  RewardPoints:this.state.RewardPoints})  
-.then(json => {  
-if(json.data.Status==='Success'){  
-  console.log(json.data.Status);  
-  alert("Data Save Successfully");  
-this.props.history.push('/CustomerList')  
-}  
-else{  
-alert('Data not Saved');  
-debugger;  
-this.props.history.push('/CustomerList')  
-}  
-})  
-}  
-handleChange= (e)=> {  
-this.setState({[e.target.name]:e.target.value});  
-}  
-   
-render() {  
-return (  
-   <Container className="App">  
-    <h4 className="PageHeading">Enter Customer Information</h4>  
-    <Form className="form">  
-      <Col>  
-        <FormGroup row>  
-          <Label for="FirstName" sm={2}>First Name</Label>  
-          <Col sm={10}>  
-            <Input type="text" name="FirstName" onChange={this.handleChange} value={this.state.FirstName} placeholder="First Name" />  
-          </Col>  
-        </FormGroup>  
-        <FormGroup row>  
-          <Label for="LastName" sm={2}>Last Name</Label>  
-          <Col sm={10}>  
-            <Input type="text" name="LastName" onChange={this.handleChange} value={this.state.LastName} placeholder="Last Name" />  
-          </Col>  
-        </FormGroup>  
-        <FormGroup row>  
-          <Label for="State" sm={2}>State</Label>  
-          <Col sm={10}>  
-            <Input type="text" name="State" onChange={this.handleChange} value={this.state.State} placeholder="State" />  
-          </Col>  
-        </FormGroup>  
-        <FormGroup row>  
-          <Label for="City" sm={2}>City</Label>  
-          <Col sm={10}>  
-            <Input type="text" name="City" onChange={this.handleChange} value={this.state.City} placeholder="City" />  
-          </Col>  
-        </FormGroup>  
-        <FormGroup row>  
-          <Label for="RewardPoints" sm={2}>RewardPoints</Label>  
-          <Col sm={10}>  
-            <Input type="text" name="RewardPoints" onChange={this.handleChange} value={this.state.RewardPoints} placeholder="Reward Points" />  
-          </Col>  
-        </FormGroup>  
-      </Col>  
-      <Col>  
-        <FormGroup row>  
-          <Col sm={5}>  
-          </Col>  
-          <Col sm={1}>  
-          <button type="button" onClick={this.AddCustomer} className="btn btn-success">Submit</button>  
-          </Col>  
-          <Col sm={1}>  
-            <Button color="danger">Cancel</Button>{' '}  
-          </Col>  
-          <Col sm={5}>  
-          </Col>  
-        </FormGroup>  
-      </Col>  
-    </Form>  
-  </Container>  
-);  
-}  
-   
-}  
-export default Add;  
+import {
+  Container,
+  Col,
+  Form,
+  Row,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+} from "reactstrap";
+import { APIURL } from "../settings/apisettings";
+
+const Add = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  let navigate = useNavigate();
+
+  const AddCustomer = (data) => {
+    axios.post(APIURL + "/Api/Customer/addorUpdate/", data).then((json) => {
+      console.log(json);
+      if (json.data.Status === "Success") {
+        console.log(json.data.Status);
+        alert("Data Save Successfully");
+        this.props.history.push("/CustomerList");
+      } else {
+        alert("Data not Saved");
+        this.props.history.push("/CustomerList");
+      }
+    });
+    navigate("/CustomerList");
+  };
+
+  const onSubmit = (data) => {
+    console.log("Butom cliceked", data);
+    AddCustomer(data);
+  };
+
+  return (
+    <Container className="App">
+      <h4 className="PageHeading">Enter Customer Information</h4>
+      <Form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <FormGroup row>
+          <Col>
+            <FormGroup row>
+              <Label for="FirstName" sm={2}>
+                First Name
+              </Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  name="FirstName"
+                  id="FirstName"
+                  placeholder="First Name"
+                  {...register("FirstName")}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="LastName" sm={2}>
+                Last Name
+              </Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  name="LastName"
+                  {...register("LastName")}
+                  placeholder="Last Name"
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="State" sm={2}>
+                State
+              </Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  name="State"
+                  {...register("State")}
+                  placeholder="State"
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="City" sm={2}>
+                City
+              </Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  name="City"
+                  {...register("City")}
+                  placeholder="City"
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="RewardPoints" sm={2}>
+                RewardPoints
+              </Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  name="RewardPoints"
+                  {...register("RewardPoints")}
+                  placeholder="Reward Points"
+                />
+              </Col>
+            </FormGroup>
+          </Col>
+          <Col sm={5}></Col>
+          <Col sm={1}>
+            <button type="submit" className="btn btn-success">
+              Submit
+            </button>
+          </Col>
+
+          <Col sm={5}></Col>
+        </FormGroup>
+        <Col sm={1}>
+          <button
+            color="danger"
+            type="button"
+            onClick={() => {
+              navigate("/CustomerList");
+            }}
+          >
+            Cancel
+          </button>{" "}
+        </Col>
+      </Form>
+    </Container>
+  );
+};
+export default Add;
