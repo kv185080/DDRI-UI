@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function OrderList({user}) {
   const [Orders, setOrders] = useState([]);
+  let navigate = useNavigate();
+  
   console.log(user)
   useEffect(() => {
     console.log(user);
@@ -52,6 +55,7 @@ function OrderList({user}) {
              { tabRow() }   
             </tbody>  
           </table>  
+          <button type="submit" className="btn btn-success btn-lg float-right" onClick={()=>{navigate('/Dashboard')}}>  Back to Dashboard  </button>
         </div>  
 
   );
@@ -60,89 +64,3 @@ function OrderList({user}) {
 export default OrderList;
 
 
-// import React, { Component } from 'react';
-// import axios from 'axios';
-// //import Table from './Table';  
-// import ProductTable from './ProductTable'
-// import { Card, CardBody, CardTitle, Button, CardGroup } from 'reactstrap';
-
-// export default class list extends Component {
-
-//     constructor(props) {
-//         console.log("hi");
-//         super(props);
-//         this.state = { business: [] };
-//     }
-
-
-
-//     // handleChange = function (e) {
-//     //     debugger;
-//     //     if (e.target.checked) {
-//     //         this.state.push(e.target.id);
-//     //     }
-//     // }
-
-//     handleCheckboxChange = (event) => {
-//         if (event.target.checked) {
-//           if (!this.state.workDays.includes(event.target.value)) {
-//             this.setState(prevState => ({ workDays: [...prevState.workDays, event.target.value]}))
-//           }
-//         } else {
-//           this.setState(prevState => ({ workDays: prevState.workDays.filter(day => day !== event.target.value) }));
-//         }
-//       }
-
-//     componentDidMount() {
-
-//         axios.get('http://localhost:2016/api/Product/details')
-//             .then(response => {
-//                 this.setState({ business: response.data });
-
-//             })
-//             .catch(function (error) {
-//                 console.log(error);
-//             })
-//     }
-
-//     tabRow() {
-
-//         return this.state.business.map(function (product, i) {
-//             return <Card key={product.id} style={{
-//                 width: '18rem'
-//             }}>
-//                 <CardBody>
-//                     <input type="checkbox" id={product.id}
-//                        onChange={this.handleCheckboxChange} ></input>
-//                     <CardTitle tag="h5"> {product.Name}</CardTitle>
-
-//                 </CardBody>
-//             </Card>;
-//         });
-//     }
-
-
-//     render() {
-//         return (
-//             <CardGroup>
-//                 {this.tabRow()}
-
-//                 {/* <h4 align="center">Product List</h4>  
-//           <table className="table table-striped" style={{ marginTop: 10 }}>  
-//             <thead>  
-//               <tr>  
-//               <th></th>
-//                 <th scope="col">Name</th>  
-//                 <th>Price</th>  
-//                 <th>AvailableQuantity</th>       
-               
-//               </tr>  
-//             </thead>  
-//             <tbody>  
-//              { this.tabRow() }   
-//             </tbody>  
-//           </table>   */}
-//             </CardGroup>
-//         );
-//     }
-// }  
