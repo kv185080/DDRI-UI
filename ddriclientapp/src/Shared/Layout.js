@@ -5,6 +5,7 @@ import LoginPage from "../Login/login";
 import Regster from "../Login/register";
 import ProductList from '../Product/ListProduct' ;
 import AdminDashboard from "../Admin/AdminDashboard";
+import EditOrders from "../Admin/EditOrders";
 import OrderList from '../Order/OrderList';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "../App.css";
@@ -60,6 +61,7 @@ const Layout = (props) => {
           <Route path='/ProductList' element={<ProductList></ProductList>} />
           <Route path='/OrderList' element={<OrderList user={user}></OrderList>} />
           <Route path='/AdminDashboard' element={<AdminDashboard></AdminDashboard>} />
+          <Route path='/EditOrders' element={<EditOrders></EditOrders>} />
         </Routes>
       </div>
     </>

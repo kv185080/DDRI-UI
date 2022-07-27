@@ -17,13 +17,16 @@ class Register extends React.Component {
             LastName: '',
             State: '',
             City: '',
+            Email:'',
+            Password:'',
+            Phone:'',
             RewardPoints: ''
         }
     }
     AddCustomer = () => {
         axios.post('http://localhost:2016/api/Customer/addorUpdate/', {
-            FirstName: this.state.FirstName, LastName: this.state.LastName, State: this.state.State, City: this.state.City,
-            RewardPoints: this.state.RewardPoints
+            FirstName: this.state.FirstName, LastName: this.state.LastName, State: this.state.State, City: this.state.City, Email:this.state.Email,Password:this.state.Password,
+            RewardPoints: 0,Phone:this.state.Phone
         })
             .then(json => {
                 console.log(json);

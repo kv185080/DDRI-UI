@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import{Row,Col} from "reactstrap";
 
 import "../Product/style.css";
 
@@ -49,14 +50,15 @@ const placeOrder =()=>{
   var data={'DeliveryMins':checked.length*5,'Products':[]};
   debugger;
   checked.map(p=>{
-    console.log(p);
+    //console.log(p);
     var item = {'ProductId':p,'Price':10,'Quantity':1};
     data.Products.push(item);
   })
   axios.post(`http://localhost:2016/api/Orders/Customer/${userId}/Create`,data)
             .then(response => {
                 console.log(response.data);
-
+                setChecked([]);
+                alert("Order Created Successfully");
             })
             .catch(function (error) {
                 console.log(error);
@@ -72,14 +74,17 @@ const placeOrder =()=>{
       <div className="checkList">
         <div className="title">Your CheckList:</div>
         <div className="list-container">
+        <Row>
           {products!==null && products.length>0 &&
           products.map((item, index) => (
-            <div key={item.ID}>
+            <Col sm={3}>
+            <div key={item.ID} style={{height:'75px'}}>
               <input value={item.ID} type="checkbox" onChange={handleCheck} />
               <span className={isChecked(item.ID)}>{item.Name}</span>
             </div>
-            
+            </Col>
           ))}
+          </Row>
         </div>
       </div>
 
