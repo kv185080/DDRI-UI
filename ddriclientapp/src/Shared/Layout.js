@@ -4,13 +4,15 @@ import EditCustomer from "../Customer/Edit";
 import LoginPage from "../Login/login";
 import Regster from "../Login/register";
 import ProductList from '../Product/ListProduct' ;
+import AdminDashboard from "../Admin/AdminDashboard";
+import OrderList from '../Order/OrderList';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "../App.css";
 import Dashboard from "../Login/dashboard";
 import { NavigationContext } from "../Context/NavigationContext";
 
 const Layout = (props) => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(NavigationContext);
+  const { isLoggedIn, setIsLoggedIn, user } = useContext(NavigationContext);
   useEffect(() => {}, [isLoggedIn]);
 
   const logoutClick = () => {
@@ -56,6 +58,8 @@ const Layout = (props) => {
           <Route path="/Edit/:id" element={<EditCustomer></EditCustomer>} />
           <Route path="/CustomerList" element={<Customerlist></Customerlist>} />
           <Route path='/ProductList' element={<ProductList></ProductList>} />
+          <Route path='/OrderList' element={<OrderList user={user}></OrderList>} />
+          <Route path='/AdminDashboard' element={<AdminDashboard></AdminDashboard>} />
         </Routes>
       </div>
     </>

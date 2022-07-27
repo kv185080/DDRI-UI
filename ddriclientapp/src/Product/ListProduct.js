@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../Product/style.css";
 
-function ListProduct() {
+function ListProduct({userId}) {
   // State with list of all checked item
   const [checked, setChecked] = useState([]);
   const [products, setProducts] = useState([]);
-  const checkList = ["Apple", "Banana", "Tea", "Coffee"];
+  let navigate = useNavigate();
 
   // Add/Remove checked item from list
   useEffect(() => {
@@ -45,7 +45,23 @@ const handleCheck = (event) => {
     }
     setChecked(updatedList);
   };
+const placeOrder =()=>{
+  var data={'DeliveryMins':checked.length*5,'Products':[]};
+  debugger;
+  checked.map(p=>{
+    console.log(p);
+    var item = {'ProductId':p,'Price':10,'Quantity':1};
+    data.Products.push(item);
+  })
+  axios.post(`http://localhost:2016/api/Orders/Customer/${userId}/Create`,data)
+            .then(response => {
+                console.log(response.data);
 
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+}
 
   // Return classes based on whether item is checked
   var isChecked = (item) =>
@@ -58,9 +74,9 @@ const handleCheck = (event) => {
         <div className="list-container">
           {products!==null && products.length>0 &&
           products.map((item, index) => (
-            <div key={item.Id}>
-              <input value={item.Id} type="checkbox" onChange={handleCheck} />
-              <span className={isChecked(item.Id)}>{item.Name}</span>
+            <div key={item.ID}>
+              <input value={item.ID} type="checkbox" onChange={handleCheck} />
+              <span className={isChecked(item.ID)}>{item.Name}</span>
             </div>
             
           ))}
@@ -79,7 +95,9 @@ const handleCheck = (event) => {
       </div>
       <br/>
       <div>
-      <button type="submit" className="btn btn-success btn-lg float-right" >  Checkout  </button>
+      <button type="submit" className="btn btn-success btn-lg float-right" onClick={placeOrder} disabled={checked.length===0}>  Place Order  </button>
+      &nbsp; &nbsp;
+      <button type="submit" className="btn btn-success btn-lg float-right" onClick={()=>{navigate('/OrderList')}}>  View Orders  </button>
       </div>
     </div>
 
@@ -90,89 +108,3 @@ const handleCheck = (event) => {
 export default ListProduct;
 
 
-// import React, { Component } from 'react';
-// import axios from 'axios';
-// //import Table from './Table';  
-// import ProductTable from './ProductTable'
-// import { Card, CardBody, CardTitle, Button, CardGroup } from 'reactstrap';
-
-// export default class list extends Component {
-
-//     constructor(props) {
-//         console.log("hi");
-//         super(props);
-//         this.state = { business: [] };
-//     }
-
-
-
-//     // handleChange = function (e) {
-//     //     debugger;
-//     //     if (e.target.checked) {
-//     //         this.state.push(e.target.id);
-//     //     }
-//     // }
-
-//     handleCheckboxChange = (event) => {
-//         if (event.target.checked) {
-//           if (!this.state.workDays.includes(event.target.value)) {
-//             this.setState(prevState => ({ workDays: [...prevState.workDays, event.target.value]}))
-//           }
-//         } else {
-//           this.setState(prevState => ({ workDays: prevState.workDays.filter(day => day !== event.target.value) }));
-//         }
-//       }
-
-//     componentDidMount() {
-
-//         axios.get('http://localhost:2016/api/Product/details')
-//             .then(response => {
-//                 this.setState({ business: response.data });
-
-//             })
-//             .catch(function (error) {
-//                 console.log(error);
-//             })
-//     }
-
-//     tabRow() {
-
-//         return this.state.business.map(function (product, i) {
-//             return <Card key={product.id} style={{
-//                 width: '18rem'
-//             }}>
-//                 <CardBody>
-//                     <input type="checkbox" id={product.id}
-//                        onChange={this.handleCheckboxChange} ></input>
-//                     <CardTitle tag="h5"> {product.Name}</CardTitle>
-
-//                 </CardBody>
-//             </Card>;
-//         });
-//     }
-
-
-//     render() {
-//         return (
-//             <CardGroup>
-//                 {this.tabRow()}
-
-//                 {/* <h4 align="center">Product List</h4>  
-//           <table className="table table-striped" style={{ marginTop: 10 }}>  
-//             <thead>  
-//               <tr>  
-//               <th></th>
-//                 <th scope="col">Name</th>  
-//                 <th>Price</th>  
-//                 <th>AvailableQuantity</th>       
-               
-//               </tr>  
-//             </thead>  
-//             <tbody>  
-//              { this.tabRow() }   
-//             </tbody>  
-//           </table>   */}
-//             </CardGroup>
-//         );
-//     }
-// }  

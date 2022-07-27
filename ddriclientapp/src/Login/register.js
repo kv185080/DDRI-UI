@@ -1,6 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import '../Customer/AddStyle.css';
+//import { useNavigate } from "react-router-dom";
+// import Customerlist from "../Customer/List";
+// import RedirectTo from 'react-router-dom';
+
+
+
 
 import { Container, Col, Form, Row, FormGroup, Label, Input, Button } from 'reactstrap';
 class Register extends React.Component {
@@ -20,15 +26,14 @@ class Register extends React.Component {
             RewardPoints: this.state.RewardPoints
         })
             .then(json => {
-                if (json.data.Status === 'Success') {
-                    console.log(json.data.Status);
+                console.log(json);
+                if (json.status === 200) {
                     alert("Data Save Successfully");
-                    this.props.history.push('/CustomerList')
+                    window.location.href = '/CustomerList'
+                    
                 }
                 else {
                     alert('Data not Saved');
-                    debugger;
-                    this.props.history.push('/CustomerList')
                 }
             })
     }
